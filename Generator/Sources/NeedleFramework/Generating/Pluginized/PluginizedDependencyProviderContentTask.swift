@@ -100,7 +100,7 @@ class PluginizedDependencyProviderContentTask: AbstractTask<[PluginizedProcessed
             // Level start at 1, since we dropped the current scope.
             var level = 1
             for component in searchPath {
-                if component.properties.contains(property) {
+                if component.properties.contains(property.removingOptionality) {
                     levelMap[component.name] = level
                     return PluginizedProcessedProperty(data: ProcessedProperty(unprocessed: property, sourceComponentType: component.name), auxillarySourceType: nil, auxillarySourceName: nil)
                 } else if let auxillaryProperties = auxillaryPropertyMap[component.name] {
