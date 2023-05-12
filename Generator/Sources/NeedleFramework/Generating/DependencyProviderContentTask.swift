@@ -71,6 +71,11 @@ class DependencyProviderContentTask: AbstractTask<[ProcessedDependencyProvider]>
                 }
                 level += 1
             }
+            
+            if property.isOptional {
+                return ProcessedProperty(unprocessed: property, sourceComponentType: nil)
+            }
+            
             var possibleMatches = [String]()
             var possibleMatchComponent: String?
             // Second pass, this time only match types to produce helpful warnings

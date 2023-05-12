@@ -59,11 +59,19 @@ class PluginizedPropertiesSerializer: Serializer {
                 return ""
             }
         }()
-
-        return """
-            var \(property.data.unprocessed.name): \(property.data.unprocessed.type) {
-                return \(auxillaryPrefix)\(property.data.sourceComponentType.lowercasedFirstChar())\(auxillaryAccessor)\(auxillarySuffix).\(property.data.unprocessed.name)
-            }
-        """
+        
+        if let sourceComponentType = property.data.sourceComponentType {
+            return """
+                var \(property.data.unprocessed.name): \(property.data.unprocessed.type) {
+                    return \(auxillaryPrefix)\(sourceComponentType.lowercasedFirstChar())\(auxillaryAccessor)\(auxillarySuffix).\(property.data.unprocessed.name)
+                }
+            """
+        } else {
+            return """
+                var \(property.data.unprocessed.name): \(property.data.unprocessed.type) {
+                    return nil
+                }
+            """
+        }
     }
 }

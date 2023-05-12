@@ -57,5 +57,5 @@ struct ProcessedProperty: Equatable, Hashable {
     /// The unprocessed property we started with.
     let unprocessed: Property
     /// Type of the Component where this property is satisfied.
-    let sourceComponentType: String
+    let sourceComponentType: String?
 }

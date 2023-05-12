@@ -113,6 +113,11 @@ class PluginizedDependencyProviderContentTask: AbstractTask<[PluginizedProcessed
                 }
                 level += 1
             }
+            
+            if property.isOptional {
+                return PluginizedProcessedProperty(data: ProcessedProperty(unprocessed: property, sourceComponentType: nil), auxillarySourceType: nil, auxillarySourceName: nil)
+            }
+            
             var possibleMatches = [String]()
             var possibleMatchComponent: String?
             // Second pass, this time only match types to produce helpful warnings
