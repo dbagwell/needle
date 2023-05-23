@@ -25,6 +25,20 @@ struct Property: Hashable {
     let type: String
     /// If this property is internal
     let isInternal: Bool
+    /// If this property is optional
+    var isOptional: Bool {
+        return type.hasSuffix("?")
+    }
+    /// A new property instance that removes 1 layer of optionality from the type if it is optional
+    var removingOptionality: Property {
+        if isOptional {
+            var type = type
+            type.removeLast()
+            return Property(name: name, type: type, isInternal: isInternal)
+        } else {
+            return self
+        }
+    }
     
     init(name: String, type: String, isInternal: Bool = false) {
         self.name = name
@@ -43,5 +57,5 @@ struct ProcessedProperty: Equatable, Hashable {
     /// The unprocessed property we started with.
     let unprocessed: Property
     /// Type of the Component where this property is satisfied.
-    let sourceComponentType: String
+    let sourceComponentType: String?
 }

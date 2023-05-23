@@ -65,12 +65,17 @@ class DependencyProviderContentTask: AbstractTask<[ProcessedDependencyProvider]>
             // Level start at 1, since we dropped the current scope.
             var level = 1
             for component in searchPath {
-                if component.properties.contains(property) {
+                if component.properties.contains(property.removingOptionality) {
                     levelMap[component.name] = level
                     return ProcessedProperty(unprocessed: property, sourceComponentType: component.name)
                 }
                 level += 1
             }
+            
+            if property.isOptional {
+                return ProcessedProperty(unprocessed: property, sourceComponentType: nil)
+            }
+            
             var possibleMatches = [String]()
             var possibleMatchComponent: String?
             // Second pass, this time only match types to produce helpful warnings

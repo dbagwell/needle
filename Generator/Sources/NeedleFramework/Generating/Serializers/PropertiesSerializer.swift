@@ -44,10 +44,18 @@ class PropertiesSerializer: Serializer {
     private let processedProperties: [ProcessedProperty]
 
     private func serialize(_ property: ProcessedProperty) -> String {
-        return """
-            var \(property.unprocessed.name): \(property.unprocessed.type) {
-                return \(property.sourceComponentType.lowercasedFirstChar()).\(property.unprocessed.name)
-            }
-        """
+        if let sourceComponentType = property.sourceComponentType {
+            return """
+                var \(property.unprocessed.name): \(property.unprocessed.type) {
+                    return \(sourceComponentType.lowercasedFirstChar()).\(property.unprocessed.name)
+                }
+            """
+        } else {
+            return """
+                var \(property.unprocessed.name): \(property.unprocessed.type) {
+                    return nil
+                }
+            """
+        }
     }
 }
