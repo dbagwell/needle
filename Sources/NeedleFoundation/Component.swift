@@ -78,7 +78,7 @@ public class DependencyProvider<DependencyType> {
 /// as child scopes. A component instantiates child components that define
 /// child scopes.
 @dynamicMemberLookup
-open class Component<DependencyType>: Scope {
+open class Component<DependencyType>: NSObject, Scope {
     
     /// The parent of this component.
     public let parent: Scope
@@ -103,6 +103,7 @@ open class Component<DependencyType>: Scope {
     /// - parameter parent: The parent component of this component.
     public init(parent: Scope) {
         self.parent = parent
+        super.init()
         if let canRegister = self as? Registration {
             canRegister.registerItems()
         }
@@ -114,7 +115,7 @@ open class Component<DependencyType>: Scope {
     /// - parameter parent: The parent component of this component.
     public init(parent: Scope, nonCore: Bool) {
         self.parent = parent
-        
+        super.init()
         if let canRegister = self as? Registration {
             canRegister.registerItems()
         }
@@ -176,8 +177,8 @@ open class Component<DependencyType>: Scope {
     private var sharedInstances = [String: Any]()
     private lazy var name: String = {
         let fullyQualifiedSelfName = String(describing: self)
-        let parts = fullyQualifiedSelfName.components(separatedBy: ".")
-        return parts.last ?? fullyQualifiedSelfName
+        let className = fullyQualifiedSelfName.components(separatedBy: ".").last?.components(separatedBy: ":").first
+        return className ?? fullyQualifiedSelfName
     }()
 
     // TODO: Replace this with an `open` method, once Swift supports extension
@@ -202,7 +203,7 @@ open class Component<DependencyType>: Scope {
 /// as child scopes. A component instantiates child components that define
 /// child scopes.
 @dynamicMemberLookup
-open class Component<DependencyType>: Scope {
+open class Component<DependencyType>: NSObject, Scope {
 
     /// The parent of this component.
     public let parent: Scope
@@ -227,6 +228,7 @@ open class Component<DependencyType>: Scope {
     /// - parameter parent: The parent component of this component.
     public init(parent: Scope) {
         self.parent = parent
+        super.init()
         dependency = createDependencyProvider()
     }
 
@@ -272,8 +274,8 @@ open class Component<DependencyType>: Scope {
     private var sharedInstances = [String: Any]()
     private lazy var name: String = {
         let fullyQualifiedSelfName = String(describing: self)
-        let parts = fullyQualifiedSelfName.components(separatedBy: ".")
-        return parts.last ?? fullyQualifiedSelfName
+        let className = fullyQualifiedSelfName.components(separatedBy: ".").last?.components(separatedBy: ":").first
+        return className ?? fullyQualifiedSelfName
     }()
 
     // TODO: Replace this with an `open` method, once Swift supports extension
