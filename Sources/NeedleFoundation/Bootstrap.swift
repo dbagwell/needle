@@ -48,7 +48,7 @@ open class BootstrapComponent: Component<EmptyDependency> {
     private class BigBang: Scope {
         fileprivate let path: [String] = ["^"]
         /// This component does not have a parent. Do not access this property.
-        fileprivate var parent: Scope {
+        fileprivate var parent: Scope! {
             // With properly generated Needle code, this property should never
             // be accessed.
             fatalError("BootstrapComponent does not have a parent, do not use this property.")
