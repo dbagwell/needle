@@ -59,7 +59,7 @@ extension SyntaxNodeWithModifiers {
     }
 
     var isPrivate: Bool {
-        modifiers?.first?.name.text == "private"
+        modifiers?.first?.name.text == "private" && modifiers?.first?.detail?.detail.text != "set"
     }
 
     var isFileprivate: Bool {
