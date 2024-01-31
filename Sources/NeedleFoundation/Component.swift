@@ -34,7 +34,7 @@ public protocol Scope: AnyObject {
     var path: [String] { get }
 
     /// The parent of this component.
-    var parent: NeedleFoundation.Scope! { get }
+    var parent: NeedleFoundation.Scope { get }
     
     #if NEEDLE_DYNAMIC
     func find<T>(property: String, skipThisLevel: Bool) -> T
@@ -81,7 +81,7 @@ public class DependencyProvider<DependencyType> {
 open class Component<DependencyType>: NSObject, Scope {
     
     /// The parent of this component.
-    public private(set) weak var parent: Scope!
+    public let parent: Scope
 
     /// The path to reach this scope on the dependnecy graph.
     // Use `lazy var` to avoid computing the path repeatedly. Internally,
@@ -206,7 +206,7 @@ open class Component<DependencyType>: NSObject, Scope {
 open class Component<DependencyType>: NSObject, Scope {
 
     /// The parent of this component.
-    public private(set) weak var parent: Scope!
+    public let parent: Scope
 
     /// The path to reach this scope on the dependnecy graph.
     // Use `lazy var` to avoid computing the path repeatedly. Internally,
